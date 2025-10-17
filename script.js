@@ -35,6 +35,42 @@ function updateThemeIcon() {
 }
 
 // ============================================
+// PROFILE IMAGE FUNCTIONALITY
+// ============================================
+const avatarImage = document.getElementById('avatarImage');
+
+// Make profile image clickable to change
+avatarImage.addEventListener('click', (e) => {
+    if (e.target.tagName === 'IMG' || e.target.id === 'avatarImage') {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        
+        input.onchange = (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    profileImg.src = event.target.result;
+                    localStorage.setItem('profileImage', event.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+        
+        input.click();
+    }
+});
+
+// Load saved profile image on page load
+const savedProfileImage = localStorage.getItem('profileImage');
+if (savedProfileImage) {
+    profileImg.src = savedProfileImage;
+}
+
+// Add cursor pointer to indicate clickability
+avatarImage.title = 'Click to change profile image';
+// ============================================
 // SMOOTH SCROLL FOR NAVIGATION LINKS
 // ============================================
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
