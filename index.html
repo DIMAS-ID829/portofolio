@@ -116,7 +116,7 @@
         </div>
     </section>
 
-    <!-- Portfolio Section -->
+   <!-- Portfolio Section -->
     <section class="portfolio">
         <div class="container">
             <h2 class="section-title">Portfolio</h2>
@@ -125,24 +125,36 @@
             </p>
 
             <div class="portfolio-grid">
-                <div class="portfolio-item">
-                    <div class="portfolio-placeholder nike">Nike Air</div>
-                </div>
-                <div class="portfolio-item">
-                    <div class="portfolio-placeholder nails">Nail Trends</div>
-                </div>
-                <div class="portfolio-item">
-                    <div class="portfolio-placeholder dropnow">Dropnow</div>
-                </div>
-                <div class="portfolio-item">
-                    <div class="portfolio-placeholder bouquet">Bouquet Delivery</div>
-                </div>
-                <div class="portfolio-item">
-                    <div class="portfolio-placeholder aimm">Aimm Design</div>
-                </div>
-                <div class="portfolio-item">
-                    <div class="portfolio-placeholder nunito">Nunito</div>
-                </div>
+                <a href="https://nike.com" target="_blank" class="portfolio-item" data-project="Nike Air">
+                    <div class="portfolio-placeholder" style="background-image: url('https://via.placeholder.com/400x300/ff6b6b/ffffff?text=Nike+Air');">
+                        <div class="portfolio-overlay">Nike Air</div>
+                    </div>
+                </a>
+                <a href="https://example.com/nails" target="_blank" class="portfolio-item" data-project="Nail Trends">
+                    <div class="portfolio-placeholder" style="background-image: url('https://via.placeholder.com/400x300/4ecdc4/ffffff?text=Nail+Trends');">
+                        <div class="portfolio-overlay">Nail Trends</div>
+                    </div>
+                </a>
+                <a href="https://example.com/dropnow" target="_blank" class="portfolio-item" data-project="Dropnow">
+                    <div class="portfolio-placeholder" style="background-image: url('https://via.placeholder.com/400x300/f093fb/ffffff?text=Dropnow');">
+                        <div class="portfolio-overlay">Dropnow</div>
+                    </div>
+                </a>
+                <a href="https://example.com/bouquet" target="_blank" class="portfolio-item" data-project="Bouquet Delivery">
+                    <div class="portfolio-placeholder" style="background-image: url('https://via.placeholder.com/400x300/4b5ef7/ffffff?text=Bouquet+Delivery');">
+                        <div class="portfolio-overlay">Bouquet Delivery</div>
+                    </div>
+                </a>
+                <a href="https://example.com/aimm" target="_blank" class="portfolio-item" data-project="Aimm Design">
+                    <div class="portfolio-placeholder" style="background-image: url('https://via.placeholder.com/400x300/667eea/ffffff?text=Aimm+Design');">
+                        <div class="portfolio-overlay">Aimm Design</div>
+                    </div>
+                </a>
+                <a href="https://example.com/nunito" target="_blank" class="portfolio-item" data-project="Nunito">
+                    <div class="portfolio-placeholder" style="background-image: url('https://via.placeholder.com/400x300/f093fb/ffffff?text=Nunito');">
+                        <div class="portfolio-overlay">Nunito</div>
+                    </div>
+                </a>
             </div>
         </div>
     </section>
@@ -153,6 +165,15 @@
             <p>&copy; 2024 Dimitri Marco. All rights reserved.</p>
         </div>
     </footer>
+    
+     <!-- Modal -->
+    <div class="modal" id="projectModal">
+        <div class="modal-content">
+            <h2 id="projectTitle">Project Title</h2>
+            <p id="projectDescription">Project description goes here.</p>
+            <button class="close-btn" id="closeBtn">Close</button>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
