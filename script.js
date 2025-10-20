@@ -81,9 +81,15 @@ const projectTitle = document.getElementById('projectTitle');
 const projectDescription = document.getElementById('projectDescription');
 const portfolioItems = document.querySelectorAll('.portfolio-item');
 
-// Add click event to each portfolio item
+// Add click event to each portfolio item (prevent default link behavior for modal)
 portfolioItems.forEach(item => {
-    item.addEventListener('click', () => {
+    item.addEventListener('click', (e) => {
+        // Allow link to work normally if you want
+        // Uncomment next line if you want to navigate to link instead of modal
+        // e.preventDefault();
+        
+        // For modal popup behavior:
+        e.preventDefault();
         const projectName = item.dataset.project;
         showProjectModal(projectName);
     });
