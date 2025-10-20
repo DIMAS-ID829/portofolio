@@ -3,6 +3,7 @@
 // ============================================
 const themeToggle = document.getElementById('themeToggle');
 const body = document.body;
+const profileImg = document.getElementById('profileImg');
 
 // Check if user has a saved theme preference
 const savedTheme = localStorage.getItem('theme');
@@ -70,8 +71,106 @@ if (savedProfileImage) {
 
 // Add cursor pointer to indicate clickability
 avatarImage.title = 'Click to change profile image';
+
 // ============================================
-// SMOOTH SCROLL FOR NAVIGATION LINKS
+// PORTFOLIO MODAL FUNCTIONALITY
+// ============================================
+const modal = document.getElementById('projectModal');
+const closeBtn = document.getElementById('closeBtn');
+const projectTitle = document.getElementById('projectTitle');
+const projectDescription = document.getElementById('projectDescription');
+const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+// Add click event to each portfolio item
+portfolioItems.forEach(item => {
+    item.addEventListener('click', () => {
+        const projectName = item.dataset.project;
+        showProjectModal(projectName);
+    });
+});
+
+// Show project modal
+function showProjectModal(projectName) {
+    projectTitle.textContent = projectName;
+    projectDescription.textContent = `This is a beautiful project showcasing modern design and development practices. ${projectName} demonstrates expertise in creating responsive, user-friendly digital experiences.`;
+    modal.classList.add('active');
+}
+
+// Close modal with close button
+closeBtn.addEventListener('click', () => {
+    modal.classList.remove('active');
+});
+
+// Close modal when clicking outside modal content
+modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        modal.classList.remove('active');
+    }
+});
+
+// ============================================
+// RESUME BUTTON HANDLER
+// ============================================
+const resumeBtn = document.getElementById('resumeBtn');
+resumeBtn.addEventListener('click', () => {
+    alert('Resume akan diunduh. Fitur ini dapat dihubungkan ke file PDF Anda atau tautan download eksternal.');
+});
+
+// ============================================
+// KEYBOARD SHORTCUTS
+// ============================================
+document.addEventListener('keydown', (e) => {
+    // Press 'T' to toggle theme
+    if (e.key === 't' || e.key === 'T') {
+        themeToggle.click();
+    }
+    
+    // Press 'Escape' to close modal
+    if (e.key === 'Escape') {
+        modal.classList.remove('active');
+    }
+});
+
+// ============================================
+// SCROLL ANIMATIONS
+// ============================================
+window.addEventListener('scroll', () => {
+    const scrollTop = window.pageYOffset;
+    
+    // Parallax effect on avatar container
+    const avatarContainer = document.querySelector('.avatar-container');
+    if (avatarContainer && scrollTop < window.innerHeight) {
+        avatarContainer.style.transform = `translateY(${scrollTop * 0.5}px)`;
+    }
+});
+
+// ============================================
+// INTERSECTION OBSERVER FOR ANIMATIONS
+// ============================================
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, observerOptions);
+
+// Observe service cards and portfolio items
+document.querySelectorAll('.service-card, .portfolio-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'all 0.6s ease';
+    observer.observe(el);
+});
+
+// ============================================
+// SMOOTH SCROLL BEHAVIOR
 // ============================================
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -87,246 +186,12 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // ============================================
-// INTERSECTION OBSERVER FOR ANIMATIONS
-// ============================================
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.animation = entry.target.dataset.animation;
-            observer.unobserve(entry.target);
-        }
-    });
-}, observerOptions);
-
-// Observe elements for animation
-document.querySelectorAll('.service-card, .portfolio-item').forEach(el => {
-    el.dataset.animation = getComputedStyle(el).animation;
-    observer.observe(el);
-});
-
-// ============================================
-// PORTFOLIO ITEM CLICK HANDLER
-// ============================================
-const portfolioItems = document.querySelectorAll('.portfolio-item');
-
-portfolioItems.forEach((item, index) => {
-    item.addEventListener('click', () => {
-        const projectName = item.querySelector('.portfolio-placeholder').textContent;
-        showProjectModal(projectName);
-    });
-
-    // Add hover effect with slight rotation
-    item.addEventListener('mouseenter', () => {
-        item.style.transform = 'scale(1.05) rotate(1deg)';
-    });
-
-    item.addEventListener('mouseleave', () => {
-        item.style.transform = 'scale(1) rotate(0deg)';
-    });
-});
-
-// ============================================
-// PROJECT MODAL FUNCTION
-// ============================================
-function showProjectModal(projectName) {
-    // Create modal
-    const modal = document.createElement('div');
-    modal.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 1000;
-        animation: fadeIn 0.3s ease;
-    `;
-
-    const content = document.createElement('div');
-    content.style.cssText = `
-        background: #1a1a2e;
-        padding: 40px;
-        border-radius: 15px;
-        max-width: 500px;
-        color: white;
-        position: relative;
-        animation: slideInUp 0.3s ease;
-    `;
-
-    const title = document.createElement('h2');
-    title.textContent = projectName;
-    title.style.cssText = `
-        color: #00d4d4;
-        margin-bottom: 15px;
-        font-size: 28px;
-    `;
-
-    const description = document.createElement('p');
-    description.textContent = `This is a beautiful project showcasing modern design and development practices. ${projectName} demonstrates expertise in creating responsive, user-friendly digital experiences.`;
-    description.style.cssText = `
-        color: #b0b0b0;
-        margin-bottom: 25px;
-        line-height: 1.6;
-    `;
-
-    const closeBtn = document.createElement('button');
-    closeBtn.textContent = 'Close';
-    closeBtn.style.cssText = `
-        background: #00d4d4;
-        color: #0a0e27;
-        border: none;
-        padding: 12px 30px;
-        border-radius: 5px;
-        cursor: pointer;
-        font-weight: 600;
-        transition: all 0.3s ease;
-    `;
-
-    closeBtn.addEventListener('hover', () => {
-        closeBtn.style.transform = 'translateY(-2px)';
-    });
-
-    closeBtn.addEventListener('click', () => {
-        modal.remove();
-    });
-
-    content.appendChild(title);
-    content.appendChild(description);
-    content.appendChild(closeBtn);
-    modal.appendChild(content);
-    document.body.appendChild(modal);
-
-    // Close modal when clicking outside
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.remove();
-        }
-    });
-}
-
-// ============================================
-// RESUME BUTTON HANDLER
-// ============================================
-const resumeBtn = document.querySelector('.resume-btn');
-resumeBtn.addEventListener('click', () => {
-    alert('Resume download functionality would be implemented here!');
-});
-
-// ============================================
-// SCROLL ANIMATIONS
-// ============================================
-window.addEventListener('scroll', () => {
-    const scrollTop = window.pageYOffset;
-    
-    // Parallax effect on hero avatar
-    const avatar = document.querySelector('.avatar-circle');
-    if (avatar && scrollTop < window.innerHeight) {
-        avatar.style.transform = `translateY(${scrollTop * 0.5}px)`;
-    }
-});
-
-// ============================================
-// TYPING ANIMATION FOR HERO TITLE
-// ============================================
-function typewriterEffect(element, text, speed = 100) {
-    let i = 0;
-    element.textContent = '';
-    
-    const type = () => {
-        if (i < text.length) {
-            element.textContent += text.charAt(i);
-            i++;
-            setTimeout(type, speed);
-        }
-    };
-    
-    // Only animate on page load
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', type);
-    } else {
-        type();
-    }
-}
-
-// ============================================
-// ACTIVE LINK INDICATOR
-// ============================================
-window.addEventListener('scroll', () => {
-    const sections = document.querySelectorAll('section');
-    let current = '';
-    
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        if (pageYOffset >= sectionTop - 200) {
-            current = section.getAttribute('id');
-        }
-    });
-});
-
-// ============================================
 // INITIALIZE ON PAGE LOAD
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
-    // Add fade-in animation to body
-    body.style.animation = 'fadeInUp 0.6s ease';
-    
-    // Initialize page
+    // Update theme icon
     updateThemeIcon();
-});
-
-// ============================================
-// KEYBOARD SHORTCUTS
-// ============================================
-document.addEventListener('keydown', (e) => {
-    // Press 'T' to toggle theme
-    if (e.key === 't' || e.key === 'T') {
-        themeToggle.click();
-    }
     
-    // Press 'Escape' to close any modals
-    if (e.key === 'Escape') {
-        const modals = document.querySelectorAll('div[style*="position: fixed"]');
-        modals.forEach(modal => {
-            if (modal.style.zIndex === '1000') {
-                modal.remove();
-            }
-        });
-    }
+    // Initialize page animations
+    console.log('Portfolio loaded successfully');
 });
-
-// ============================================
-// MOBILE MENU SUPPORT
-// ============================================
-const nav = document.querySelector('.nav');
-if (nav) {
-    nav.addEventListener('click', (e) => {
-        e.stopPropagation();
-    });
-}
-
-// ============================================
-// PERFORMANCE OPTIMIZATION
-// ============================================
-// Lazy load images if they exist
-if ('IntersectionObserver' in window) {
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.classList.add('loaded');
-                observer.unobserve(img);
-            }
-        });
-    });
-    
-    document.querySelectorAll('img[data-src]').forEach(img => imageObserver.observe(img));
-}
