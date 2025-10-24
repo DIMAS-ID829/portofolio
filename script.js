@@ -36,7 +36,7 @@ function updateThemeIcon() {
 }
 
 // ============================================
-// PORTFOLIO MODAL FUNCTIONALITY
+// PORTFOLIO MODAL FUNCTIONALITY (ENHANCED)
 // ============================================
 const modal = document.getElementById('projectModal');
 const closeBtn = document.getElementById('closeBtn');
@@ -44,38 +44,121 @@ const projectTitle = document.getElementById('projectTitle');
 const projectDescription = document.getElementById('projectDescription');
 const portfolioItems = document.querySelectorAll('.portfolio-item');
 
-// Add click event to each portfolio item (prevent default link behavior for modal)
-portfolioItems.forEach(item => {
-    item.addEventListener('click', (e) => {
-        // Allow link to work normally if you want
-        // Uncomment next line if you want to navigate to link instead of modal
-        // e.preventDefault();
-        
-        // For modal popup behavior:
-        e.preventDefault();
-        const projectName = item.dataset.project;
-        showProjectModal(projectName);
-    });
-});
+let lastFocusedTrigger = null;
 
-// Show project modal
-function showProjectModal(projectName) {
+// Guard: pastikan elemen modal ada
+if (!modal || !projectTitle || !projectDescription || !closeBtn) {
+  console.warn('Modal elements missing. Check IDs: projectModal, projectTitle, projectDescription, closeBtn.');
+} else {
+  // make portfolio items keyboard accessible and attach handlers
+  portfolioItems.forEach(item => {
+    // Ensure items are focusable
+    if (!item.hasAttribute('tabindex')) item.setAttribute('tabindex', '0');
+
+    const openHandler = (e) => {
+      e.preventDefault();
+      lastFocusedTrigger = item;
+      const projectName = item.dataset.project || item.textContent.trim() || 'Project';
+      showProjectModal(projectName, item);
+    };
+
+    item.addEventListener('click', openHandler);
+    item.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openHandler(e);
+      }
+    });
+  });
+
+  // Show project modal
+  function showProjectModal(projectName, triggerEl = null) {
     projectTitle.textContent = projectName;
     projectDescription.textContent = `This is a beautiful project showcasing modern design and development practices. ${projectName} demonstrates expertise in creating responsive, user-friendly digital experiences.`;
+
     modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+
+    // focus management: move focus to close button for easy dismissal
+    closeBtn.focus();
+
+    // trap focus inside modal
+    document.addEventListener('focus', trapFocus, true);
+  }
+
+  // Close modal helper
+  function closeProjectModal() {
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+
+    // remove focus trap
+    document.removeEventListener('focus', trapFocus, true);
+
+    // restore focus to the element that opened the modal
+    if (lastFocusedTrigger && typeof lastFocusedTrigger.focus === 'function') {
+      lastFocusedTrigger.focus();
+    } else {
+      // fallback: focus body
+      document.body.focus();
+    }
+  }
+
+  // Focus trap implementation (simple)
+  function trapFocus(e) {
+    if (!modal.contains(e.target)) {
+      e.stopPropagation();
+      // send focus back to closeBtn or modal
+      closeBtn.focus();
+    }
+  }
+
+  // Close modal with close button
+  closeBtn.addEventListener('click', () => {
+    closeProjectModal();
+  });
+
+  // Close modal when clicking outside modal content
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeProjectModal();
+    }
+  });
+
+  // Close modal with Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+      closeProjectModal();
+    }
+
+    // Optional: keyboard for cycling focus when modal open (Tab handling)
+    if (modal.classList.contains('active') && e.key === 'Tab') {
+      maintainTabFocus(e);
+    }
+  });
+
+  // Maintain Tab focus inside modal (handles basic Tab/Shift+Tab)
+  function maintainTabFocus(e) {
+    const focusableSelectors = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, [tabindex]:not([tabindex="-1"])';
+    const focusable = Array.from(modal.querySelectorAll(focusableSelectors)).filter(el => el.offsetParent !== null);
+    if (focusable.length === 0) {
+      e.preventDefault();
+      closeBtn.focus();
+      return;
+    }
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    } else if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    }
+  }
 }
 
-// Close modal with close button
-closeBtn.addEventListener('click', () => {
-    modal.classList.remove('active');
-});
-
-// Close modal when clicking outside modal content
-modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-        modal.classList.remove('active');
-    }
-});
 
 // ============================================
 // RESUME BUTTON HANDLER
