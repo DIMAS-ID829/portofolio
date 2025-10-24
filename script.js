@@ -71,6 +71,7 @@ if (avatarImage) {
     //   };
     //   input.click();
     // }
+      }
   });
 
 // Load saved profile image on page load
