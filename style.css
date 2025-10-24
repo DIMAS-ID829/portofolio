@@ -226,7 +226,7 @@ body.light-mode {
 }
 
 /* ============================================
-   SERVICES SECTION
+   SERVICES SECTION (FEATURE CARDS)
    ============================================ */
 .services {
     padding: 100px 0;
@@ -253,66 +253,69 @@ body.light-mode {
     font-weight: 600;
 }
 
-.services-grid {
+/* Feature Cards Styling */
+.features {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 30px;
     margin-top: 50px;
 }
 
-.service-card {
+.feature-card {
     background-color: rgba(26, 26, 46, 0.5);
     border: 1px solid var(--border-color);
-    border-radius: 10px;
-    padding: 40px;
+    border-radius: 15px;
+    overflow: hidden;
     transition: all 0.3s ease;
     animation: fadeInUp 0.6s ease;
 }
 
-.service-card:hover {
+.feature-card:hover {
     border-color: var(--primary-color);
     transform: translateY(-10px);
     background-color: rgba(26, 26, 46, 0.8);
+    box-shadow: 0 10px 30px rgba(0, 212, 212, 0.2);
 }
 
-.service-icon {
-    font-size: 60px;
-    margin-bottom: 20px;
+.feature-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    transition: all 0.3s ease;
 }
 
-.service-card h3 {
-    font-size: 22px;
-    margin-bottom: 15px;
+.feature-card:hover img {
+    transform: scale(1.05);
+}
+
+.f-text {
+    padding: 25px;
+}
+
+.f-text h4 {
+    font-size: 24px;
+    font-weight: 700;
     color: var(--text-dark);
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
 }
 
-.service-card p {
-    color: var(--text-light);
-    margin-bottom: 25px;
-    line-height: 1.6;
-}
-
-.design-tools {
-    padding-top: 20px;
-    border-top: 1px solid var(--border-color);
-}
-
-.design-tools strong {
+.feature-card:hover .f-text h4 {
     color: var(--primary-color);
+}
+
+.f-text p {
     font-size: 14px;
-    display: block;
-    margin-bottom: 12px;
-}
-
-.design-tools ul {
-    list-style: none;
-}
-
-.design-tools li {
+    line-height: 1.8;
     color: var(--text-light);
+}
+
+.f-text .muted {
+    opacity: 0.9;
+}
+
+.f-text .small {
     font-size: 14px;
-    margin-bottom: 8px;
-    padding-left: 10px;
 }
 
 /* ============================================
@@ -414,8 +417,6 @@ body.light-mode {
     align-items: center;
     justify-content: center;
     animation: fadeIn 0.3s ease;
-    backdrop-filter: blur(4px);
-    overflow: hidden;
 }
 
 .modal.active {
@@ -427,14 +428,10 @@ body.light-mode {
     padding: 40px;
     border-radius: 15px;
     max-width: 500px;
-    width: 90%;
     color: white;
     position: relative;
     animation: slideInUp 0.3s ease;
     border: 1px solid var(--border-color);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-    max-height: 90vh;
-    overflow-y: auto;
 }
 
 .modal-content h2 {
@@ -458,192 +455,11 @@ body.light-mode {
     cursor: pointer;
     font-weight: 600;
     transition: all 0.3s ease;
-    width: 100%;
-    font-size: 16px;
 }
 
 .close-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 212, 212, 0.3);
-}
-
-.close-btn:active {
-    transform: translateY(0);
-}
-
-/* ============================================
-   MODAL ENHANCEMENTS
-   ============================================ */
-.modal-project-info {
-    animation: fadeIn 0.3s ease;
-}
-
-.modal-description {
-    color: var(--text-light);
-    line-height: 1.8;
-    margin-bottom: 25px;
-    font-size: 15px;
-}
-
-.modal-meta {
-    display: flex;
-    gap: 30px;
-    margin-bottom: 25px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.meta-item {
-    display: flex;
-    flex-direction: column;
-}
-
-.meta-item strong {
-    color: var(--primary-color);
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 5px;
-}
-
-.meta-item span {
-    color: var(--text-light);
-    font-size: 14px;
-}
-
-.modal-technologies {
-    margin-bottom: 20px;
-}
-
-.modal-technologies strong {
-    color: var(--primary-color);
-    display: block;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 12px;
-}
-
-.tech-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.tech-tag {
-    background: rgba(0, 212, 212, 0.1);
-    color: var(--primary-color);
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 13px;
-    border: 1px solid rgba(0, 212, 212, 0.3);
-    transition: all 0.3s ease;
-}
-
-.tech-tag:hover {
-    background: rgba(0, 212, 212, 0.2);
-    border-color: var(--primary-color);
-    transform: translateY(-2px);
-}
-
-/* ============================================
-   ANIMATIONS
-   ============================================ */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes slideInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ============================================
-   ACCESSIBILITY
-   ============================================ */
-.modal-close {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: transparent;
-    color: var(--text-light);
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 5px 10px;
-    transition: color 0.3s ease;
-}
-
-.modal-close:hover {
-    color: var(--primary-color);
-}
-
-.close-btn:focus,
-.modal-close:focus {
-    outline: 2px solid var(--primary-color);
-    outline-offset: 2px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .modal,
-    .modal-content,
-    .modal-project-info {
-        animation: none;
-    }
-    
-    .close-btn:hover,
-    .tech-tag:hover {
-        transform: none;
-    }
-}
-
-/* ============================================
-   RESPONSIVE DESIGN
-   ============================================ */
-@media (max-width: 768px) {
-    .modal-content {
-        padding: 30px 20px;
-        max-width: 95%;
-    }
-    
-    .modal-content h2 {
-        font-size: 24px;
-    }
-}
-
-@media (max-width: 480px) {
-    .modal-content {
-        padding: 25px;
-    }
-    
-    .modal-description {
-        font-size: 14px;
-    }
-    
-    .modal-meta {
-        flex-direction: column;
-        gap: 15px;
-    }
-    
-    .tech-tags {
-        gap: 8px;
-    }
-    
-    .tech-tag {
-        font-size: 12px;
-        padding: 5px 10px;
-    }
 }
 
 /* ============================================
@@ -741,9 +557,13 @@ body.light-mode {
         font-size: 36px;
     }
 
-    .services-grid {
+    .features {
         grid-template-columns: 1fr;
         gap: 25px;
+    }
+
+    .feature-card img {
+        height: 220px;
     }
 
     .portfolio-grid {
