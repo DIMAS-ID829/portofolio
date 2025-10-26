@@ -331,6 +331,39 @@ body.light-mode {
     background-color: var(--bg-dark);
 }
 
+.portfolio-filter {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 40px 0;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 12px 30px;
+    background-color: transparent;
+    color: var(--text-light);
+    border: 2px solid var(--border-color);
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.filter-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.filter-btn.active {
+    background-color: var(--primary-color);
+    color: #0a0e27;
+    border-color: var(--primary-color);
+    box-shadow: 0 5px 15px rgba(0, 212, 212, 0.3);
+}
+
 .portfolio-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -390,6 +423,21 @@ body.light-mode {
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
     position: relative;
     z-index: 2;
+}
+
+.portfolio-category {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--primary-color);
+    color: #0a0e27;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    z-index: 3;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 /* ============================================
@@ -643,6 +691,22 @@ body.light-mode {
 
     .portfolio-overlay {
         font-size: 20px;
+    }
+
+    .portfolio-filter {
+        gap: 10px;
+    }
+
+    .filter-btn {
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+
+    .portfolio-category {
+        font-size: 10px;
+        padding: 6px 12px;
+        top: 15px;
+        right: 15px;
     }
 
     .nav {
