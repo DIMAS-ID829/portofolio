@@ -42,8 +42,34 @@ const modal = document.getElementById('projectModal');
 const closeBtn = document.getElementById('closeBtn');
 const projectTitle = document.getElementById('projectTitle');
 const projectDescription = document.getElementById('projectDescription');
+const filterBtns = document.querySelectorAll('.filter-btn')
 const portfolioItems = document.querySelectorAll('.portfolio-item');
 
+filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterBtns.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                portfolioItems.forEach(item => {
+                    const category = item.getAttribute('data-category');
+                    
+                    if (filterValue === 'all' || category === filterValue) {
+                        item.style.display = 'block';
+                        // Add animation
+                        item.style.animation = 'none';
+                        setTimeout(() => {
+                            item.style.animation = 'fadeInUp 0.6s ease';
+                        }, 10);
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
 // Add click event to each portfolio item (prevent default link behavior for modal)
 portfolioItems.forEach(item => {
     item.addEventListener('click', (e) => {
