@@ -257,6 +257,45 @@
             <p>&copy; 2025 Dimas Id. All rights reserved.</p>
         </div>
     </footer>
+    
+    <!-- Project Modal -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal" aria-label="Close modal">&times;</button>
+            <div class="modal-header">
+                <h2 id="projectTitle">Project Title</h2>
+                <span id="projectCategory" class="project-badge">Category</span>
+            </div>
+            <div class="modal-body">
+                <div class="project-image-container" id="projectImageContainer">
+                    <img id="projectImage" src="" alt="Project Preview">
+                </div>
+                <p id="projectDescription" class="project-description">Project description</p>
+                <div class="project-details">
+                    <div class="detail-item">
+                        <span class="detail-label">🛠️ Tech Stack:</span>
+                        <span id="projectTech" class="detail-value">Technologies</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">📅 Year:</span>
+                        <span id="projectYear" class="detail-value">2025</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">👤 Role:</span>
+                        <span id="projectRole" class="detail-value">Developer</span>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <a href="#" id="projectLiveLink" class="btn-primary" target="_blank" rel="noopener noreferrer">
+                        🚀 View Live
+                    </a>
+                    <a href="#" id="projectGithubLink" class="btn-secondary" target="_blank" rel="noopener noreferrer">
+                        💻 View Code
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 
  	 <script src="script.js"></script>
 </body>
