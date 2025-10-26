@@ -8,7 +8,9 @@ Struktur HTML
 
 Styling (CSS)
 
-Fungsionalitas (JavaScript)
+Script  (JS)
+
+PROFILE.PNG/WEBP
 
 Cara Menjalankan
 
@@ -25,16 +27,13 @@ Struktur file dasar untuk proyek ini kemungkinan akan terlihat seperti ini:
 |   |-- main.js        // File JavaScript utama
 |
 |-- /images            // Folder untuk semua aset gambar
-    |-- hero-image.png // Foto di hero section
-    |-- icon-palette.png
-    |-- icon-laptop.png
-    |-- icon-thumbsup.png
-    |-- portfolio-nike.png
-    |-- portfolio-bag.png
+    |-- PROFILE.png // Foto di hero section
+    |-- PROFILE.webp
     |-- (dan gambar lainnya)
 🏛️ Struktur HTML
 File index.html akan disusun secara semantik untuk membagi halaman menjadi beberapa bagian yang logis.
-
-<header> (Navigasi):
+File style.css sebagai pemanis agar struktur html lebih bagus.
+File script.js sebagai pelengkap untuk animations dan react.
 
 Logo atau nama brand di kiri ("MIRAGE | STRIKETROUGH").
+profile atau image di kanan subject.
