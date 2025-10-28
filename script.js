@@ -222,9 +222,18 @@ const projectData = {
     }
 };
 
-// Add click event to portfolio items
+// Add mouseenter event to portfolio items to open modal on hover
 if (portfolioItems.length > 0) {
     portfolioItems.forEach(item => {
+        // Open modal on hover
+        item.addEventListener('mouseenter', (e) => {
+            const projectName = item.getAttribute('data-project');
+            if (projectName && modal) {
+                showProjectModal(projectName);
+            }
+        });
+        
+        // Also keep click functionality
         item.addEventListener('click', (e) => {
             e.preventDefault();
             const projectName = item.getAttribute('data-project');
