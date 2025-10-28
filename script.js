@@ -35,12 +35,65 @@ function updateThemeIcon() {
 }
 
 // ============================================
+// MOBILE NAVIGATION (HAMBURG MENU)
+// ============================================
+function hamburg() {
+    const navbar = document.querySelector(".dropdown");
+    if (navbar) {
+        navbar.style.transform = "translateY(0px)";
+    }
+}
+
+function cancel() {
+    const navbar = document.querySelector(".dropdown");
+    if (navbar) {
+        navbar.style.transform = "translateY(-500px)";
+    }
+}
+
+// ============================================
+// TYPEWRITER ANIMATION
+// ============================================
+const texts = [
+    "DEVELOPER",
+    "YOUTUBER",
+    "DESIGNER"
+];
+let speed = 100;
+const textElements = document.querySelector(".typewriter-text");
+let textIndex = 0;
+let characterIndex = 0;
+
+function typeWriter() {
+    if (textElements && characterIndex < texts[textIndex].length) {
+        textElements.innerHTML += texts[textIndex].charAt(characterIndex);
+        characterIndex++;
+        setTimeout(typeWriter, speed);
+    } else {
+        setTimeout(eraseText, 1000);
+    }
+}
+
+function eraseText() {
+    if (textElements && textElements.innerHTML.length > 0) {
+        textElements.innerHTML = textElements.innerHTML.slice(0, -1);
+        setTimeout(eraseText, 50);
+    } else {
+        textIndex = (textIndex + 1) % texts.length;
+        characterIndex = 0;
+        setTimeout(typeWriter, 500);
+    }
+}
+
+// ============================================
 // RESUME BUTTON HANDLER
 // ============================================
 const resumeBtn = document.getElementById('resumeBtn');
-resumeBtn.addEventListener('click', () => {
-    alert('Resume akan diunduh. Fitur ini dapat dihubungkan ke file PDF Anda atau tautan download eksternal.');
-});
+if (resumeBtn) {
+    resumeBtn.addEventListener('click', () => {
+        alert('Resume akan diunduh. Fitur ini dapat dihubungkan ke file PDF Anda atau tautan download eksternal.');
+    });
+}
 
 // ============================================
 // SMOOTH SCROLL BEHAVIOR
@@ -94,11 +147,10 @@ filterBtns.forEach(btn => {
 // PROJECT MODAL FUNCTIONALITY
 // ============================================
 const modal = document.getElementById('projectModal');
-const closeModal = document.getElementById('closeModal');
+const closeModalBtn = document.getElementById('closeModal');
 const projectTitle = document.getElementById('projectTitle');
 const projectCategory = document.getElementById('projectCategory');
 const projectImage = document.getElementById('projectImage');
-const projectImageContainer = document.getElementById('projectImageContainer');
 const projectDescription = document.getElementById('projectDescription');
 const projectTech = document.getElementById('projectTech');
 const projectYear = document.getElementById('projectYear');
@@ -108,76 +160,80 @@ const projectGithubLink = document.getElementById('projectGithubLink');
 
 // Project data dengan variasi lengkap
 const projectData = {
+    'Nike Air': {
+        category: 'Design',
+        image: 'https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?auto=compress&cs=tinysrgb&w=800',
+        description: 'A modern e-commerce platform design for Nike featuring dynamic product showcases, seamless shopping experience, and responsive design across all devices.',
+        tech: 'Figma, Adobe XD, Photoshop',
+        year: '2024',
+        role: 'UI/UX Designer',
+        liveLink: 'https://nike.com',
+        githubLink: '#'
+    },
+    'Nail Trends': {
+        category: 'Design',
+        image: 'https://images.pexels.com/photos/3997379/pexels-photo-3997379.jpeg?auto=compress&cs=tinysrgb&w=800',
+        description: 'A beauty and wellness website showcasing nail art trends, tutorials, and booking system for salon appointments with elegant design.',
+        tech: 'Figma, Illustrator, InVision',
+        year: '2024',
+        role: 'Product Designer',
+        liveLink: 'https://example.com/nails',
+        githubLink: '#'
+    },
+    'Dropnow': {
+        category: 'Development',
+        image: 'https://images.pexels.com/photos/270632/pexels-photo-270632.jpeg?auto=compress&cs=tinysrgb&w=800',
+        description: 'A data onboarding platform for product growth with clean interface and powerful analytics features built with modern tech stack.',
+        tech: 'React, Node.js, MongoDB, TypeScript',
+        year: '2024',
+        role: 'Full Stack Developer',
+        liveLink: 'https://example.com/dropnow',
+        githubLink: 'https://github.com/example/dropnow'
+    },
+    'Bouquet Delivery': {
+        category: 'Design',
+        image: 'https://images.pexels.com/photos/1458866/pexels-photo-1458866.jpeg?auto=compress&cs=tinysrgb&w=800',
+        description: 'Smart bouquet delivery service with elegant UI, featuring real-time tracking, subscription plans, and personalized flower recommendations.',
+        tech: 'Figma, Adobe XD, After Effects',
+        year: '2024',
+        role: 'Lead Designer',
+        liveLink: 'https://example.com/bouquet',
+        githubLink: '#'
+    },
     'Aimm Design': {
         category: 'Design',
         image: 'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800',
-        description: 'A modern and elegant design system created for a boutique fashion brand. This project showcases minimalist aesthetics combined with intuitive user experience, featuring custom illustrations and a cohesive color palette.',
-        tech: 'Figma, Adobe XD, Illustrator',
+        description: 'A comprehensive design system and UI toolkit for building consistent, accessible user interfaces with modern design principles.',
+        tech: 'Figma, Sketch, Design Tokens',
         year: '2024',
-        role: 'UI/UX Designer & Art Director',
-        liveLink: 'https://example.com/aimm-design',
+        role: 'Design System Lead',
+        liveLink: 'https://example.com/aimm',
         githubLink: '#'
     },
-    'Portfolio X': {
-        category: 'Development',
-        image: 'https://images.pexels.com/photos/270632/pexels-photo-270632.jpeg?auto=compress&cs=tinysrgb&w=800',
-        description: 'A fully responsive portfolio website built with modern web technologies. Features smooth animations, dark mode toggle, and optimized performance. Includes interactive project showcases and contact forms with backend integration.',
-        tech: 'React, Next.js, Tailwind CSS, Node.js',
-        year: '2024',
-        role: 'Full Stack Developer',
-        liveLink: 'https://example.com/portfolio-x',
-        githubLink: 'https://github.com/example/portfolio-x'
-    },
-    'Project B': {
-        category: 'Branding',
-        image: 'https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=800',
-        description: 'Complete brand identity development for a tech startup. Includes logo design, brand guidelines, color systems, typography selection, and marketing materials. The brand reflects innovation and trustworthiness.',
-        tech: 'Adobe Creative Suite, Brand Strategy',
-        year: '2023',
-        role: 'Brand Designer & Strategist',
-        liveLink: 'https://example.com/project-b',
-        githubLink: '#'
-    },
-    'Belgium C': {
-        category: 'Design',
-        image: 'https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=800',
-        description: 'An elegant e-commerce platform design for a European chocolate brand. Features sophisticated product displays, smooth checkout flow, and mobile-first approach with attention to detail in every interaction.',
-        tech: 'Sketch, InVision, Photoshop',
-        year: '2024',
-        role: 'Lead Product Designer',
-        liveLink: 'https://example.com/belgium-c',
-        githubLink: '#'
-    },
-    'Varken D': {
-        category: 'Development',
-        image: 'https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg?auto=compress&cs=tinysrgb&w=800',
-        description: 'A real-time dashboard application for data visualization and analytics. Built with modern frameworks and featuring interactive charts, live data streaming, and customizable widgets for business intelligence.',
-        tech: 'Vue.js, D3.js, Firebase, TypeScript',
-        year: '2024',
-        role: 'Frontend Engineer',
-        liveLink: 'https://example.com/varken-d',
-        githubLink: 'https://github.com/example/varken-d'
-    },
-    'Portfolio Z': {
+    'Nunito': {
         category: 'Branding',
         image: 'https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=800',
-        description: 'Comprehensive rebranding project for a sustainable fashion company. Created a fresh, eco-friendly brand identity with focus on environmental values, including packaging design and social media templates.',
-        tech: 'Adobe Illustrator, InDesign, Brand Guidelines',
-        year: '2023',
+        description: 'Complete brand identity and creative design platform featuring collaboration tools, design resources, and team workspace.',
+        tech: 'Branding, Adobe Creative Suite',
+        year: '2024',
         role: 'Creative Director',
-        liveLink: 'https://example.com/portfolio-z',
+        liveLink: 'https://example.com/nunito',
         githubLink: '#'
     }
 };
 
 // Add click event to portfolio items
-portfolioItems.forEach(item => {
-    item.addEventListener('click', (e) => {
-        e.preventDefault();
-        const projectName = item.querySelector('.portfolio-overlay').textContent;
-        showProjectModal(projectName);
+if (portfolioItems.length > 0) {
+    portfolioItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            const projectName = item.getAttribute('data-project');
+            if (projectName && modal) {
+                showProjectModal(projectName);
+            }
+        });
     });
-});
+}
 
 // Show project modal with data
 function showProjectModal(projectName) {
@@ -189,45 +245,58 @@ function showProjectModal(projectName) {
     }
 
     // Populate modal with project data
-    projectTitle.textContent = projectName;
-    projectCategory.textContent = project.category;
-    projectCategory.className = `project-badge badge-${project.category.toLowerCase()}`;
-    projectImage.src = project.image;
-    projectImage.alt = projectName;
-    projectDescription.textContent = project.description;
-    projectTech.textContent = project.tech;
-    projectYear.textContent = project.year;
-    projectRole.textContent = project.role;
-    projectLiveLink.href = project.liveLink;
-    projectGithubLink.href = project.githubLink;
-
-    // Hide GitHub link if not available
-    if (project.githubLink === '#') {
-        projectGithubLink.style.display = 'none';
-    } else {
-        projectGithubLink.style.display = 'inline-flex';
+    if (projectTitle) projectTitle.textContent = projectName;
+    if (projectCategory) {
+        projectCategory.textContent = project.category;
+        projectCategory.className = `project-badge badge-${project.category.toLowerCase()}`;
+    }
+    if (projectImage) {
+        projectImage.src = project.image;
+        projectImage.alt = projectName;
+    }
+    if (projectDescription) projectDescription.textContent = project.description;
+    if (projectTech) projectTech.textContent = project.tech;
+    if (projectYear) projectYear.textContent = project.year;
+    if (projectRole) projectRole.textContent = project.role;
+    if (projectLiveLink) projectLiveLink.href = project.liveLink;
+    if (projectGithubLink) {
+        projectGithubLink.href = project.githubLink;
+        // Hide GitHub link if not available
+        if (project.githubLink === '#') {
+            projectGithubLink.style.display = 'none';
+        } else {
+            projectGithubLink.style.display = 'inline-flex';
+        }
     }
 
     // Show modal with animation
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden'; // Prevent scrolling
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling
+    }
 }
 
 // Close modal function
 function closeProjectModal() {
-    modal.classList.remove('active');
-    document.body.style.overflow = ''; // Restore scrolling
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
+    }
 }
 
 // Close modal with close button
-closeModal.addEventListener('click', closeProjectModal);
+if (closeModalBtn) {
+    closeModalBtn.addEventListener('click', closeProjectModal);
+}
 
 // Close modal when clicking outside
-modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-        closeProjectModal();
-    }
-});
+if (modal) {
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeProjectModal();
+        }
+    });
+}
 
 // ============================================
 // KEYBOARD SHORTCUTS
@@ -235,19 +304,19 @@ modal.addEventListener('click', (e) => {
 document.addEventListener('keydown', (e) => {
     // Press 'T' to toggle theme
     if (e.key === 't' || e.key === 'T') {
-        themeToggle.click();
+        if (themeToggle) themeToggle.click();
     }
     
     // Press 'Escape' to close modal
     if (e.key === 'Escape') {
-        if (modal.classList.contains('active')) {
+        if (modal && modal.classList.contains('active')) {
             closeProjectModal();
         }
     }
 });
 
 // ============================================
-// SCROLL ANIMATIONS
+// SMOOTH SCROLL ANIMATIONS
 // ============================================
 window.addEventListener('scroll', () => {
     const scrollTop = window.pageYOffset;
@@ -255,16 +324,38 @@ window.addEventListener('scroll', () => {
     // Parallax effect on avatar container
     const avatarContainer = document.querySelector('.avatar-container');
     if (avatarContainer && scrollTop < window.innerHeight) {
-        avatarContainer.style.transform = `translateY(${scrollTop * 0.5}px)`;
+        avatarContainer.style.transform = `translateY(${scrollTop * 0.3}px)`;
     }
+
+    // Header shadow on scroll
+    const header = document.querySelector('.header');
+    if (header) {
+        if (scrollTop > 50) {
+            header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+        } else {
+            header.style.boxShadow = 'none';
+        }
+    }
+
+    // Fade in elements on scroll
+    const elements = document.querySelectorAll('.feature-card, .portfolio-item');
+    elements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        
+        if (elementTop < windowHeight - 100) {
+            element.style.opacity = '1';
+            element.style.transform = 'translateY(0)';
+        }
+    });
 });
 
 // ============================================
 // INTERSECTION OBSERVER FOR ANIMATIONS
 // ============================================
 const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
+    threshold: 0.15,
+    rootMargin: '0px 0px -50px 0px'
 };
 
 const observer = new IntersectionObserver((entries) => {
@@ -272,15 +363,15 @@ const observer = new IntersectionObserver((entries) => {
         if (entry.isIntersecting) {
             entry.target.style.opacity = '1';
             entry.target.style.transform = 'translateY(0)';
+            entry.target.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
         }
     });
 }, observerOptions);
 
-// Observe feature cards and portfolio items
-document.querySelectorAll('.feature-card, .portfolio-item').forEach(el => {
+// Observe feature cards and portfolio items with initial state
+document.querySelectorAll('.feature-card, .portfolio-item, .hero-content, .hero-avatar').forEach(el => {
     el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'all 0.6s ease';
+    el.style.transform = 'translateY(30px)';
     observer.observe(el);
 });
 
@@ -291,6 +382,28 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update theme icon
     updateThemeIcon();
     
-    // Initialize page animations
+    // Start typewriter animation if element exists
+    if (textElements) {
+        typeWriter();
+    }
+    
+    // Add smooth entrance animation to body
+    body.style.opacity = '0';
+    setTimeout(() => {
+        body.style.transition = 'opacity 0.5s ease';
+        body.style.opacity = '1';
+    }, 100);
+    
+    // Initialize page
     console.log('Portfolio loaded successfully');
+    
+    // Trigger initial animations for visible elements
+    setTimeout(() => {
+        const heroElements = document.querySelectorAll('.hero-content, .hero-avatar');
+        heroElements.forEach(el => {
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+            el.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+        });
+    }, 200);
 });
